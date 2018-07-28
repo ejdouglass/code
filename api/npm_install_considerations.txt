@@ -1,0 +1,21 @@
+In general:
+[] express -- the entirety of setting up the server architecture
+[] dotenv -- a handy way to set multiple environmental variables
+  // Be sure to make sure you have a line that simply reads require('dotenv').config() in the main server/app Express file
+  // npm install express dotenv --save
+For user auth:
+[] jsonwebtoken -- creates JWTs for us
+[] passport -- authentication in Express, providing a common gateway for auth strats such as Facebook, Twitter, Oauth, etc.
+[] passport-local -- strategy of passport that uses username and pw stored locally
+[] express-jwt -- used in authenticating routes, making sure user has proper JWT to access a route in the app
+  // npm install jsonwebtoken passport passport-local express-jwt --save
+
+Note that for app building:
+[] app-routing module is not installed by default, so y'all need to set that up yourself if you wanna roll with it
+  // Consider adding the routing module to EJDBoT, and make sure to roll all that goodness back into the app.modul
+  // Alternatively, you can actually define routes in the app.module itself, which is particularly easier to manage with a smaller app
+
+As of Angular 5+,
+[] ensure that app.module.ts is using HttpClientModule from @angular/common/http instead of HttpModule from @angular/http
+  // then services end up using HttpClient from @angular/common/http
+  // hit a bunch of errors using the HttpClient without the app.module having HttpClientModule, as those two are interrelated, apparently?

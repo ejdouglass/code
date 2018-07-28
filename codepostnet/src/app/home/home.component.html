@@ -1,0 +1,25 @@
+<div class="row">
+  <!-- Apparently the below means that medium will have 12/6 = 2 per, and large will have 12/4 = 3 per? 
+  Basically, on small devices, each item will take up 12/12 columns, therefore taking up the entirety -->
+  <!-- We can also merrily use ngFor to grab the post array, which is defined in the home component, which imports
+  the proper service to grab posts, as well as the post class to define what's in a post... well, that's not TOO terribly
+  complicated, I think I could recreate this... -->
+  <div class="columns small-12 medium-6 large-4 posts" *ngFor="let post of posts">
+    <div class="post-container">
+      <div class="row">
+        <div class="columns small-12 large-10">
+          <a routerLink="/details/{{ post._id }}" class="post-title"> {{ post.title }}</a>
+        </div>
+        <!-- show-for-large means that only large viewscreens will see what's in this div, otherwise doesn't display -->
+        <div class="columns small-12 large-2 show-for-large">
+          <a href="#" target="_blank" class="external">
+            <!-- In the tutorial, we have some custom-arse SVG file here that draws a whole fancy thing, buuut not gonna worry about that here, so, DRACKY -->
+            <img src="/assets/images/dracky.png">
+          </a>
+        </div>
+      </div>
+      <p>{{ post.description | length: 130}}</p>
+      <a routerLink="/details/{{ post._id }}" class="cta-btn btn2">More Info</a>
+    </div>
+  </div>
+</div>

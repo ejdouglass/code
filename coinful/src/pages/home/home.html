@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><img src="assets/logo.svg" id="logo"></ion-title>
+    <!-- The 'end' bit here just pushes it all to the right? -->
+    <ion-buttons end>
+      <button ion-button icon-only (click)="showSearch()">
+        <!-- You can find the stuff like "add" in the documentation... lots of preset icons and such! -->
+        <ion-icon name="add"></ion-icon>
+        Add Coins
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <span id="colname">Coin Name</span>
+      </ion-col>
+      <ion-col>
+        <!-- "clear" below removes some of the default styling associated with the element -->
+        <button ion-button icon-left clear (click)="refreshCoins()" id="refresh" color="light">
+          <ion-icon name="refresh"></ion-icon>
+          Refresh
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list *ngIf="coins">
+    <!-- Normally this would be "let coin of coins" buuuut since the public crypto API returns an object,
+          we have to play it a little differently, as below: -->
+    <ion-item-sliding *ngFor="let coin of objectKeys(coins); let i=index" (ionDrag)="swiped(i)">
+      <ion-item (click)="coinDetails(coin,i)" no-lines>
+        {{coin}}
+        <!-- item-end scoots this ion-note to the end of the item -->
+        <ion-note item-end color="bluetxt">
+          {{coins[coin].USD | currency:'USD':true}}
+        </ion-note>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button (click)="removeCoin(coin)"><ion-icon name="close" class="size"></ion-icon></button>
+      </ion-item-options>
+    <ion-item class="details" *ngIf="detailToggle[i]" no-lines>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <span class="label">Market Cap</span>
+            <span class="answer">{{details.MKTCAP}}</span>
+          </ion-col>
+          <ion-col>
+              <span class="label">Change (24HR)</span>
+              <span class="answer">{{details.CHANGE24HOUR}} ({{details.CHANGEPCT24HOUR}}%)</span>
+          </ion-col>
+          <ion-col class="end">
+              <span class="label">High (24HR)</span>
+              <span class="answer">{{details.HIGH24HOUR}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <br>
+            <span class="label">Price (30 Days)</span>
+            <canvas id="canvas{{i}}">{{ chart[i] }}</canvas>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
